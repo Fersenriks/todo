@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.scss';
-import {Todo} from './Todo';
+import {Todo} from './Todo.jsx';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
