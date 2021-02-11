@@ -39,26 +39,12 @@
         font-size: 14px;
       }
 
-      .badge{
-        margin: 0;
-        padding: 0;
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        
-        &--green{
-            background-color: #42B883;
-        }
-        &--blue{
-            background-color: #64C4ED;
-        }
-        &--pink{
-            background-color: #FFBBCC;
-        }
-        &--orange{
-            background-color: #ffaf19;
-        }
-      }
+      
     }
     
+  }
+
+  .badge{
+    width: 20px;
+    height: 20px;
   }

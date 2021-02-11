@@ -1,10 +1,13 @@
 import React from 'react'
+import Badge from './Badge'
 
 import { List } from './List'
 
 import './ListAddForm.scss'
 
-const ListAddBtn = () => {
+const ListAddBtn = ({colors}) => {
+
+    console.log(colors)
 
     const [visibleForm, setVisible] = React.useState(false);
 
@@ -30,7 +33,14 @@ const ListAddBtn = () => {
             {
                 visibleForm &&
                 (<div className="todo__add-form">
-                    <input type="text" />
+                    <input type="text" placeholder="Название списка..." />
+                    <div className="todo__add-form--colors">
+                
+                        {
+                            colors.map((itemColor) => <Badge key={itemColor.id} color={itemColor.name} />)
+                        }
+                    </div>
+                    <button className="todo__add-form--btn">Добавить</button>
                 </div>)
             }
         </React.Fragment>

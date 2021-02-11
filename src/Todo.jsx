@@ -2,11 +2,10 @@ import React from 'react'
 import './Todo.scss';
 import { List } from './components/List'
 import ListAddForm from './components/ListAddForm'
+import DB from './assets/db.json'
+
 
 export function Todo() {
-
-  const [state, useState] = React.useState(false);
-
 
   return (
     <div className="todo">
@@ -44,7 +43,7 @@ export function Todo() {
           ]}
         />
         <ListAddForm 
-          
+          colors={DB.colors}
         />
       </div>
       <div className="todo__content">
