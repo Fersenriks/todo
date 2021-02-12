@@ -1,20 +1,20 @@
 import React from 'react'
 import Badge from './Badge'
-
 import { List } from './List'
+
+import closeBtn from '../assets/img/close.svg'
 
 import './ListAddForm.scss'
 
-const ListAddBtn = ({colors}) => {
+const ListAddBtn = ({ colors }) => {
 
-    console.log(colors)
-
-    const [visibleForm, setVisible] = React.useState(false);
+    const [visibleForm, setVisibleForm] = React.useState(false);
+    const [selectColor, setSelectColor] = React.useState(colors[0].id);
 
     return (
         <React.Fragment>
             <List
-                onClick={() => setVisible(!visibleForm)}
+                onClick={() => setVisibleForm(!visibleForm)}
                 items={[
                     {
                         icon:
@@ -33,11 +33,17 @@ const ListAddBtn = ({colors}) => {
             {
                 visibleForm &&
                 (<div className="todo__add-form">
+                    <img onClick={() => setVisibleForm(!visibleForm)} src={closeBtn} className="todo__add-form--close" />
                     <input type="text" placeholder="Название списка..." />
                     <div className="todo__add-form--colors">
-                
+
                         {
-                            colors.map((itemColor) => <Badge key={itemColor.id} color={itemColor.name} />)
+                            colors.map((itemColor) => <Badge
+                                onClick={() => setSelectColor(itemColor.id)}
+                                key={itemColor.id}
+                                color={itemColor.name}
+                                className={selectColor === itemColor.id && 'active'}
+                            />)
                         }
                     </div>
                     <button className="todo__add-form--btn">Добавить</button>

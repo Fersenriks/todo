@@ -5,7 +5,9 @@
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    
+    border: 2px;
+    cursor: pointer;
+
     &--green{
         background-color: #42B883;
     }
@@ -29,5 +31,9 @@
     }
     &--purple{
         background-color: #C355F5;
+    }
+
+    &.active{
+        border: 2px solid rgb(66, 66, 66);
     }
   }
