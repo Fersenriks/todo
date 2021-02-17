@@ -6,10 +6,27 @@ import closeBtn from '../assets/img/close.svg'
 
 import './ListAddForm.scss'
 
-const ListAddBtn = ({ colors }) => {
+const ListAddBtn = ({ colors, setListItem, listItem }) => {
 
     const [visibleForm, setVisibleForm] = React.useState(false);
     const [selectColor, setSelectColor] = React.useState(colors[0].id);
+    const [inputValue, setInputValue] = React.useState('')
+
+    const addList = () => {
+    
+        setListItem([...listItem, {
+            id: Math.random(),
+            name: inputValue, 
+            colorId: selectColor, 
+            // color: "green"
+        }])
+
+        setInputValue('')
+        setSelectColor(colors[0].id)
+        setVisibleForm(false)
+        
+        console.log(listItem)
+    }
 
     return (
         <React.Fragment>
@@ -25,7 +42,7 @@ const ListAddBtn = ({ colors }) => {
                                 21.335938 11.777344 0 21.335938-9.558594 21.335938-21.335938v-170.664062h170.664062c11.777344 0 21.335938-9.558594
                                 21.335938-21.335938 0-11.773437-9.558594-21.332031-21.335938-21.332031zm0 0"/>
                             </svg>,
-                        label: 'Добавить список',
+                        name: 'Добавить список',
                         className: 'todo__list--add'
                     }
                 ]}
@@ -34,9 +51,15 @@ const ListAddBtn = ({ colors }) => {
                 visibleForm &&
                 (<div className="todo__add-form">
                     <img onClick={() => setVisibleForm(!visibleForm)} src={closeBtn} className="todo__add-form--close" />
-                    <input type="text" placeholder="Название списка..." />
-                    <div className="todo__add-form--colors">
 
+                    <input
+                        value={inputValue}
+                        onChange={event => setInputValue(event.target.value)}
+                        type="text"
+                        placeholder="Название списка..."
+                    />
+
+                    <div className="todo__add-form--colors">
                         {
                             colors.map((itemColor) => <Badge
                                 onClick={() => setSelectColor(itemColor.id)}
@@ -46,7 +69,7 @@ const ListAddBtn = ({ colors }) => {
                             />)
                         }
                     </div>
-                    <button className="todo__add-form--btn">Добавить</button>
+                    <button onClick={addList} className="todo__add-form--btn">Добавить</button>
                 </div>)
             }
         </React.Fragment>

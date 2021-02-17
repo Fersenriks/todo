@@ -5,8 +5,6 @@
   &--add{
     color: #868686;
 
-    
-
     &:hover{
       color: black;
       
@@ -19,10 +17,13 @@
   li{
     display: flex;
     align-items: center;
-      
     padding: 10px 12px;
     margin-bottom: 1px;
     cursor: pointer;
+  
+    &:hover{
+      background: rgba(255, 255, 255, .5);
+    }
 
     &.active{
       background: #FFFFFF;
@@ -44,7 +45,4 @@
     
   }
 
-  .badge{
-    width: 20px;
-    height: 20px;
-  }
+  

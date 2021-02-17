@@ -14,7 +14,7 @@ export const List = ({ items, onClick }) => {
                         <i>
                             {item.icon ? item.icon : <Badge color={item.color} />}
                         </i>
-                        <span>{item.label}</span>
+                        <span>{item.name}</span>
                     </li>
                 )
             }
