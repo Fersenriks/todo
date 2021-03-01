@@ -3,6 +3,7 @@ import './Todo.scss';
 import { List } from './components/List'
 import ListAddForm from './components/ListAddForm'
 import DB from './assets/db.json'
+import Task from './components/Task';
 
 export function Todo() {
 
@@ -12,7 +13,7 @@ export function Todo() {
       return item;
     })
   )
-  
+
   return (
     <div className="todo">
       <div className="todo__sidebar">
@@ -29,6 +30,7 @@ export function Todo() {
         />
         <List
           items={listItem}
+          isRemoveble
         />
         <ListAddForm
           listItem={listItem}
@@ -36,8 +38,8 @@ export function Todo() {
           colors={DB.colors}
         />
       </div>
-      <div className="todo__content">
-
+      <div className="todo__tasks">
+        <Task />
       </div>
     </div>
   );

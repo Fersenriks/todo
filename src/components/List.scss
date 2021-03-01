@@ -2,6 +2,7 @@
   list-style: none;
   margin-bottom: 20px;
   
+  
   &--add{
     color: #868686;
 
@@ -20,9 +21,23 @@
     padding: 10px 12px;
     margin-bottom: 1px;
     cursor: pointer;
-  
+    
     &:hover{
       background: rgba(255, 255, 255, .5);
+    }
+
+    
+
+    &:hover .todo__list-remove{
+      opacity: .3;
+    }
+
+    .todo__list-remove{
+      opacity: 0;
+
+      &:hover{
+        opacity: .8;
+      }
     }
 
     &.active{
@@ -31,17 +46,18 @@
       border-radius: 4px;
     }
 
+
       i{
         display: inline-flex;
         margin-right: 8px;
       }
 
       span{
+        flex: 1;
         font-size: 14px;
       }
-
-      
     }
+  
     
   }
 

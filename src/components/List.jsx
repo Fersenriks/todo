@@ -1,9 +1,10 @@
 import './List.scss';
 import classNames from 'classnames'
+import removeSvg from '../assets/img/remove.svg'
 
 import Badge from './Badge'
 
-export const List = ({ items, onClick }) => {
+export const List = ({ items, onClick, isRemoveble }) => {
     // console.log(items)
     
     return (
@@ -15,6 +16,7 @@ export const List = ({ items, onClick }) => {
                             {item.icon ? item.icon : <Badge color={item.color} />}
                         </i>
                         <span>{item.name}</span>
+                        {isRemoveble ? <img className="todo__list-remove" src={removeSvg} alt="Remove" /> : ''}
                     </li>
                 )
             }

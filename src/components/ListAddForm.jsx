@@ -13,18 +13,19 @@ const ListAddBtn = ({ colors, setListItem, listItem }) => {
     const [inputValue, setInputValue] = React.useState('')
 
     const addList = () => {
-    
+
+        if(!inputValue) return
+
         setListItem([...listItem, {
             id: Math.random(),
-            name: inputValue, 
-            colorId: selectColor, 
-            // color: "green"
+            name: inputValue,
+            color: colors.filter(c => c.id === selectColor)[0].name,
         }])
 
         setInputValue('')
         setSelectColor(colors[0].id)
         setVisibleForm(false)
-        
+
         console.log(listItem)
     }
 
@@ -50,7 +51,13 @@ const ListAddBtn = ({ colors, setListItem, listItem }) => {
             {
                 visibleForm &&
                 (<div className="todo__add-form">
-                    <img onClick={() => setVisibleForm(!visibleForm)} src={closeBtn} className="todo__add-form--close" />
+                    <img onClick={() => {
+                        setVisibleForm(!visibleForm)
+                        setInputValue('')
+                        setSelectColor(colors[0].id)
+                    }}
+                        src={closeBtn}
+                        className="todo__add-form--close" />
 
                     <input
                         value={inputValue}
