@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import axios from 'axios'
 import Badge from './Badge'
 import { List } from './List'
 
@@ -6,21 +7,39 @@ import closeBtn from '../assets/img/close.svg'
 
 import './ListAddForm.scss'
 
-const ListAddBtn = ({ colors, setListItem, listItem }) => {
+const ListAddBtn = ({ colors, setListItem, listItem, onAddList }) => {
 
     const [visibleForm, setVisibleForm] = React.useState(false);
-    const [selectColor, setSelectColor] = React.useState(colors[0].id);
+    const [selectColor, setSelectColor] = React.useState(1);
     const [inputValue, setInputValue] = React.useState('')
+
+    useEffect(() => {
+        if(Array.isArray(colors)){
+            setSelectColor(colors[0].id)
+        }
+        console.log(colors)
+    }, [colors])
 
     const addList = () => {
 
         if(!inputValue) return
 
-        setListItem([...listItem, {
-            id: Math.random(),
+        // setListItem([...listItem, {
+        //     id: Math.random(),
+        //     name: inputValue,
+        //     color: colors.filter(c => c.id === selectColor)[0].name,
+        // }])
+        const color = colors.filter(c => c.id === selectColor)[0].id;
+        const colorName = colors.filter(c => c.id === selectColor)[0].name;
+        // const color = colors.id;
+        axios.post('http://localhost:3001/lists', {
             name: inputValue,
-            color: colors.filter(c => c.id === selectColor)[0].name,
-        }])
+            colorId: color
+        }).then(({data}) => {
+            onAddList({ ...data, color: {name: colorName}})
+        })
+
+        
 
         setInputValue('')
         setSelectColor(colors[0].id)

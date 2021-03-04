@@ -1,18 +1,29 @@
-import React from 'react'
+import React, {useEffect} from 'react'
+import axios from 'axios'
 import './Todo.scss';
 import { List } from './components/List'
 import ListAddForm from './components/ListAddForm'
-import DB from './assets/db.json'
 import Task from './components/Task';
 
 export function Todo() {
+  const [lists, setLists] = React.useState(null);
+  const [colors, setColors] = React.useState(null);
 
-  const [listItem, setListItem] = React.useState(
-    DB.lists.map((item) => {
-      item.color = DB.colors.filter(color => color.id === item.colorId)[0].name;
-      return item;
-    })
-  )
+  useEffect(() => {
+    axios
+      .get('http://localhost:3001/lists?_expand=color&_embed=tasks')
+      .then(({ data }) => {
+        setLists(data);
+      });
+    axios.get('http://localhost:3001/colors').then(({ data }) => {
+      setColors(data);
+    });
+  }, []);
+
+  const onAddList = obj => {
+    const newList = [...lists, obj];
+    setLists(newList);
+  };
 
   return (
     <div className="todo">
@@ -28,14 +39,19 @@ export function Todo() {
             },
           ]}
         />
-        <List
-          items={listItem}
-          isRemoveble
-        />
+        {lists ? (
+          <List
+            items={lists}
+            isRemovable
+          />
+        ) : (
+          'Загрузка...'
+        )}
         <ListAddForm
-          listItem={listItem}
-          setListItem={setListItem}
-          colors={DB.colors}
+          listItem={lists}
+          onAddList={onAddList}
+          // setListItem={setListItem}
+          colors={colors}
         />
       </div>
       <div className="todo__tasks">
