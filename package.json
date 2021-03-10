@@ -19,7 +19,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "fake-start": "json-server --watch ./src/assets/db.json --port 3001"
+    "fake-start": "npx json-server --watch ./src/assets/db.json --port 3001"
   },
   "eslintConfig": {
     "extends": [

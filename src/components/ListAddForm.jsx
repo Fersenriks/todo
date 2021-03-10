@@ -17,7 +17,6 @@ const ListAddBtn = ({ colors, setListItem, listItem, onAddList }) => {
         if(Array.isArray(colors)){
             setSelectColor(colors[0].id)
         }
-        console.log(colors)
     }, [colors])
 
     const addList = () => {
@@ -39,13 +38,9 @@ const ListAddBtn = ({ colors, setListItem, listItem, onAddList }) => {
             onAddList({ ...data, color: {name: colorName}})
         })
 
-        
-
         setInputValue('')
         setSelectColor(colors[0].id)
         setVisibleForm(false)
-
-        console.log(listItem)
     }
 
     return (

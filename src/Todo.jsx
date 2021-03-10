@@ -25,6 +25,15 @@ export function Todo() {
     setLists(newList);
   };
 
+  const onRemove = (item, lists) => {
+    if (window.confirm(`Are you sure?`)) {
+      axios.delete('http://localhost:3001/lists/' + item.id)
+        .then(
+          setLists(lists.filter(el => el.id !== item.id))
+        )
+    }    
+  }
+
   return (
     <div className="todo">
       <div className="todo__sidebar">
@@ -42,7 +51,8 @@ export function Todo() {
         {lists ? (
           <List
             items={lists}
-            isRemovable
+            onRemove={onRemove}
+            isRemoveble
           />
         ) : (
           'Загрузка...'
@@ -55,7 +65,7 @@ export function Todo() {
         />
       </div>
       <div className="todo__tasks">
-        <Task />
+        {lists && <Task taskItem={lists[1]}/>}
       </div>
     </div>
   );
