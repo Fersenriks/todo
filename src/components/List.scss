@@ -53,6 +53,9 @@
       }
 
       span{
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
         flex: 1;
         font-size: 14px;
       }

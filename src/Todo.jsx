@@ -8,6 +8,7 @@ import Task from './components/Task';
 export function Todo() {
   const [lists, setLists] = React.useState(null);
   const [colors, setColors] = React.useState(null);
+  const [selectList, setSelectList] = React.useState(null);
 
   useEffect(() => {
     axios
@@ -27,11 +28,17 @@ export function Todo() {
 
   const onRemove = (item, lists) => {
     if (window.confirm(`Are you sure?`)) {
-      axios.delete('http://localhost:3001/lists/' + item.id)
+      axios.delete(`http://localhost:3001/lists/${item.id}`)
         .then(
           setLists(lists.filter(el => el.id !== item.id))
         )
     }    
+  }
+
+  const onClickList = (item) => {
+    // console.log(item)
+    if(item) setSelectList(item)
+    console.log(selectList)
   }
 
   return (
@@ -53,6 +60,7 @@ export function Todo() {
             items={lists}
             onRemove={onRemove}
             isRemoveble
+            onClickList = {onClickList}
           />
         ) : (
           'Загрузка...'
@@ -60,12 +68,11 @@ export function Todo() {
         <ListAddForm
           listItem={lists}
           onAddList={onAddList}
-          // setListItem={setListItem}
           colors={colors}
         />
       </div>
       <div className="todo__tasks">
-        {lists && <Task taskItem={lists[1]}/>}
+        {lists && <Task taskItem={selectList ? selectList : null}/>}
       </div>
     </div>
   );
