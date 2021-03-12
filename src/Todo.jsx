@@ -6,6 +6,7 @@ import ListAddForm from './components/ListAddForm'
 import Task from './components/Task';
 
 export function Todo() {
+
   const [lists, setLists] = React.useState(null);
   const [colors, setColors] = React.useState(null);
   const [selectList, setSelectList] = React.useState(null);
@@ -36,9 +37,19 @@ export function Todo() {
   }
 
   const onClickList = (item) => {
-    // console.log(item)
     if(item) setSelectList(item)
-    console.log(selectList)
+  }
+
+  const onEditTitle = (id, title) => {
+    const newList = lists.map(item => {
+      if(item.id === id) {
+        item.name = title;
+      }
+      return item;
+    })
+    setLists(newList)
+    console.log(newList)
+    // console.log(id, title)
   }
 
   return (
@@ -57,6 +68,7 @@ export function Todo() {
         />
         {lists ? (
           <List
+            selectList={selectList}
             items={lists}
             onRemove={onRemove}
             isRemoveble
@@ -72,7 +84,7 @@ export function Todo() {
         />
       </div>
       <div className="todo__tasks">
-        {lists && <Task taskItem={selectList ? selectList : null}/>}
+        {lists && <Task onEditTitle={onEditTitle} taskItem={selectList ? selectList : null}/>}
       </div>
     </div>
   );

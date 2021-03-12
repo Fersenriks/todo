@@ -1,18 +1,26 @@
 import './Task.scss'
-// import checkSvg from '../assets/img/check.svg'
+import axios from 'axios'
+import renameSvg from '../assets/img/rename.svg'
 
-const Task = ({ taskItem }) => {
+const Task = ({ taskItem, onEditTitle }) => {    
+    const editTitle = () => {
+        const newTitle = window.prompt('Введите название', taskItem.name);
 
-    // console.log(taskItem)
+        if(newTitle) {
+            onEditTitle(taskItem.id, newTitle)
+        }
 
-    // taskItem.tasks.forEach(task => console.log(task.text))
+        axios.patch(`http://localhost:3001/lists/${taskItem.id}`, {
+            name: newTitle
+        }).catch(() => alert('Не удалось обновить название списка!!!'))
+    }
 
     return (
         <div className="tasks">
             {
                 taskItem ?
                     <>
-                        <h2 className="tasks__title">{taskItem.name}</h2>
+                        <h2 className="tasks__title">{taskItem.name} <img onClick={() => editTitle()} src={renameSvg} alt="редактировать имя" /></h2>
                         {
                             taskItem.tasks.map(
                                 (task, index) => (
