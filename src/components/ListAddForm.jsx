@@ -7,35 +7,30 @@ import closeBtn from '../assets/img/close.svg'
 
 import './ListAddForm.scss'
 
-const ListAddBtn = ({ colors, setListItem, listItem, onAddList }) => {
+const ListAddBtn = ({ colors, onAddList }) => {
 
     const [visibleForm, setVisibleForm] = React.useState(false);
     const [selectColor, setSelectColor] = React.useState(1);
     const [inputValue, setInputValue] = React.useState('')
 
     useEffect(() => {
-        if(Array.isArray(colors)){
+        if (Array.isArray(colors)) {
             setSelectColor(colors[0].id)
         }
     }, [colors])
 
     const addList = () => {
 
-        if(!inputValue) return
+        if (!inputValue) return
 
-        // setListItem([...listItem, {
-        //     id: Math.random(),
-        //     name: inputValue,
-        //     color: colors.filter(c => c.id === selectColor)[0].name,
-        // }])
         const color = colors.filter(c => c.id === selectColor)[0].id;
         const colorName = colors.filter(c => c.id === selectColor)[0].name;
-        // const color = colors.id;
+
         axios.post('http://localhost:3001/lists', {
             name: inputValue,
             colorId: color
-        }).then(({data}) => {
-            onAddList({ ...data, color: {name: colorName}})
+        }).then(({ data }) => {
+            onAddList({ ...data, color: { name: colorName } })
         })
 
         setInputValue('')
@@ -79,7 +74,6 @@ const ListAddBtn = ({ colors, setListItem, listItem, onAddList }) => {
                         type="text"
                         placeholder="Название списка..."
                     />
-
                     <div className="todo__add-form--colors">
                         {
                             colors.map((itemColor) => <Badge

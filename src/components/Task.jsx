@@ -1,12 +1,13 @@
 import './Task.scss'
 import axios from 'axios'
 import renameSvg from '../assets/img/rename.svg'
+import TaskForm from './TasksForm'
 
-const Task = ({ taskItem, onEditTitle }) => {    
+const Task = ({ taskItem, onEditTitle }) => {
     const editTitle = () => {
         const newTitle = window.prompt('Введите название', taskItem.name);
 
-        if(newTitle) {
+        if (newTitle) {
             onEditTitle(taskItem.id, newTitle)
         }
 
@@ -14,13 +15,16 @@ const Task = ({ taskItem, onEditTitle }) => {
             name: newTitle
         }).catch(() => alert('Не удалось обновить название списка!!!'))
     }
-
+    taskItem && console.log(taskItem)
     return (
         <div className="tasks">
             {
-                taskItem ?
+                taskItem &&
+                <h2 className="tasks__title">{taskItem.name} <img onClick={() => editTitle()} src={renameSvg} alt="редактировать имя" /></h2>
+            }
+            {
+                taskItem && taskItem.tasks.length > 0 ?
                     <>
-                        <h2 className="tasks__title">{taskItem.name} <img onClick={() => editTitle()} src={renameSvg} alt="редактировать имя" /></h2>
                         {
                             taskItem.tasks.map(
                                 (task, index) => (
@@ -42,10 +46,9 @@ const Task = ({ taskItem, onEditTitle }) => {
                         }
                     </>
                     :
-                    <p>Задачи отсутствуют</p>
+                    <h3>Задачи отсутствуют</h3>
             }
-
-
+            <TaskForm />
         </div>
     )
 }

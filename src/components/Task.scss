@@ -2,6 +2,14 @@
     flex: 1;
     padding: 50px;
 
+    h3{
+        color: #cccbcb;
+        position: absolute;
+        top: 50%;
+        left: 45%;
+        font-size: 20pt;
+    }
+
     &__title{
         font-family: 'Montserrat';
         font-weight: bold;
@@ -23,7 +31,6 @@
     }
 
     &__item{
-
         .task__item-row{
             display: flex;
             margin-bottom: 10px;

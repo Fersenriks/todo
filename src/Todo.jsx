@@ -49,7 +49,10 @@ export function Todo() {
     })
     setLists(newList)
     console.log(newList)
-    // console.log(id, title)
+  }
+
+  const onAddTask = (listId, taskObj) => {
+
   }
 
   return (
