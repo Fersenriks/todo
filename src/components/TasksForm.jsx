@@ -1,22 +1,40 @@
 import React from 'react';
+import axios from 'axios'
 
 import plusSvg from '../assets/img/plus.svg';
 
 import './TaskForm.scss';
 
-const TaskForm = () => {
+const TaskForm = ({taskItem, onAddTask}) => {
 
     const [addTask, setAddTask] = React.useState(false);
     const [inputValue, setInputValue] = React.useState('');
+    const [isLoading, setIsLoading] = React.useState(null)
 
-    const addNewTask = () => {
+    const toggleTaskForm = () => {
         setAddTask(!addTask);
         setInputValue('');
     }
 
+    const addNewTask = () => {
+        const taskObj = {
+            listId: taskItem.id,
+            text: inputValue,
+            completed: false
+        };
+        setIsLoading(true)
+        axios.post(`http://localhost:3001/tasks/`, taskObj).then(({data}) => {
+            onAddTask(taskItem.id, data)
+            toggleTaskForm();
+        }).catch(() => {
+            alert('Ошибка добавления списка!')
+        }).finally(() => {
+            setIsLoading(false)
+        })
+    }
+
     const cancelAddTask = () => {
-        setAddTask(!addTask);
-        setInputValue('');
+        toggleTaskForm();
     }
 
     return (
@@ -38,7 +56,7 @@ const TaskForm = () => {
                         placeholder="Текст задачи"
                     />
                     <div className="tasks__form-control">
-                        <button onClick={() => addNewTask()} className="btn-green">Добавить задачу</button>
+                        <button onClick={() => addNewTask()} disabled={isLoading} className="btn-green">{isLoading ? 'Добавление...' : 'Добавить задачу'}</button>
                         <button onClick={() => cancelAddTask()} className="btn-grey">Отмена</button>
                     </div>
                 </div>

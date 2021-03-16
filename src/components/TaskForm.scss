@@ -43,7 +43,8 @@
             border: none;
             cursor: pointer;
             margin-right: 10px;
-            outline: none;   
+            outline: none;
+            
         }
 
         .btn-green{
@@ -56,6 +57,10 @@
 
             &:active{
                 background-color: darken(#4DD599, 15%)
+            }
+
+            &:disabled{
+                background-color: rgb(179, 179, 179);
             }
         }
 

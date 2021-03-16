@@ -12,6 +12,7 @@ const ListAddBtn = ({ colors, onAddList }) => {
     const [visibleForm, setVisibleForm] = React.useState(false);
     const [selectColor, setSelectColor] = React.useState(1);
     const [inputValue, setInputValue] = React.useState('')
+    const [onAdding, setOnAdding] = React.useState(null)
 
     useEffect(() => {
         if (Array.isArray(colors)) {
@@ -26,16 +27,23 @@ const ListAddBtn = ({ colors, onAddList }) => {
         const color = colors.filter(c => c.id === selectColor)[0].id;
         const colorName = colors.filter(c => c.id === selectColor)[0].name;
 
+        setOnAdding(true);
+
         axios.post('http://localhost:3001/lists', {
             name: inputValue,
             colorId: color
         }).then(({ data }) => {
             onAddList({ ...data, color: { name: colorName } })
+        }).catch(() => {
+            alert('Ошибка добавления задачи!')
+        }).finally(() => {
+            setOnAdding(false);
+            setVisibleForm(false)
         })
 
         setInputValue('')
         setSelectColor(colors[0].id)
-        setVisibleForm(false)
+        
     }
 
     return (
@@ -84,7 +92,12 @@ const ListAddBtn = ({ colors, onAddList }) => {
                             />)
                         }
                     </div>
-                    <button onClick={addList} className="todo__add-form--btn">Добавить</button>
+                    <button
+                        onClick={addList}
+                        className="todo__add-form--btn"
+                    >
+                        {onAdding ? 'Добавление...' : 'Добавить'}
+                    </button>
                 </div>)
             }
         </React.Fragment>

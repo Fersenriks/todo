@@ -3,7 +3,7 @@ import axios from 'axios'
 import renameSvg from '../assets/img/rename.svg'
 import TaskForm from './TasksForm'
 
-const Task = ({ taskItem, onEditTitle }) => {
+const Task = ({ taskItem, onEditTitle, onAddTask }) => {
     const editTitle = () => {
         const newTitle = window.prompt('Введите название', taskItem.name);
 
@@ -15,7 +15,7 @@ const Task = ({ taskItem, onEditTitle }) => {
             name: newTitle
         }).catch(() => alert('Не удалось обновить название списка!!!'))
     }
-    taskItem && console.log(taskItem)
+    
     return (
         <div className="tasks">
             {
@@ -46,9 +46,12 @@ const Task = ({ taskItem, onEditTitle }) => {
                         }
                     </>
                     :
-                    <h3>Задачи отсутствуют</h3>
+                    taskItem && <h3>Задачи отсутствуют</h3>
             }
-            <TaskForm />
+            {
+                taskItem && 
+                <TaskForm onAddTask={onAddTask} taskItem={taskItem} />
+            }
         </div>
     )
 }

@@ -47,12 +47,20 @@ export function Todo() {
       }
       return item;
     })
+
     setLists(newList)
-    console.log(newList)
   }
 
   const onAddTask = (listId, taskObj) => {
+    
+    const newList = lists.map(item => {
+      if(item.id === listId) {
+        item.tasks = [...item.tasks, taskObj];
+      }
+      return item;
+    });
 
+    setLists(newList);
   }
 
   return (
@@ -87,7 +95,7 @@ export function Todo() {
         />
       </div>
       <div className="todo__tasks">
-        {lists && <Task onEditTitle={onEditTitle} taskItem={selectList ? selectList : null}/>}
+        {lists && <Task onAddTask={onAddTask} onEditTitle={onEditTitle} taskItem={selectList ? selectList : null}/>}
       </div>
     </div>
   );
